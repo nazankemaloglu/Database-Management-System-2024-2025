@@ -1,0 +1,17 @@
+create database HASTANE
+Use HASTANE
+create table Hasta(
+HastaId int identity(15223,1) primary key,
+Soyad nvarchar(30) not null,
+Ad nvarchar(30) not null,
+Cinsiyet nvarchar(6) not null,
+Boy float not null,
+Kilo float not null
+)
+
+insert into Hasta(Soyad,Ad,Cinsiyet,Boy,Kilo) values
+('Agarwal','Arjun','M',192,89),
+('Adams','Poppy','F',185,92),
+('Johnson','Tierra','F',16,59)
+
+select HastaId from Hasta where Soyad LIKE 'A%'

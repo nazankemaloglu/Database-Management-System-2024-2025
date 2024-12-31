@@ -1,0 +1,31 @@
+create database OKUL
+
+use OKUL
+
+create table Ogrenci(
+Ogr_No int identity(101,1) primary key,
+Ad nvarchar(30) not null,
+Soyad nvarchar(50) not null
+)
+
+create table Not_(
+NotId int identity(1,1) primary key,
+OgrNo int foreign key references Ogrenci(Ogr_No),
+DersKodu nvarchar(5) not null,
+Vize int not null,
+Final int
+)
+
+insert into Ogrenci(Ad,Soyad) values
+('Ali','Turan'),
+('Ahmet','Büyük'),
+('Can',	'Türkoğlu')
+
+insert into Not_(OgrNo,DersKodu,Vize,Final) values
+(101,'MM1',	36,	47),
+(105,'MM1',	92,88),
+(101,'MM3',	82,	89),
+(103,'DH5',	54,	65)
+
+select Ad,Soyad,Vize from Ogrenci inner join Not_ on
+Ogrenci.Ogr_No=Not_.OgrNo where Vize>50
