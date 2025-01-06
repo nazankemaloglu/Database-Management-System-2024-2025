@@ -1,0 +1,66 @@
+create database Alisveris
+
+use Alisveris
+create table Musteri(
+Musteri_Id int Primary Key,
+Ad nvarchar(20) not null,
+Soyad nvarchar(20) not null,
+Telefon nvarchar(11) not null,
+mail nvarchar(30) not null
+)
+
+
+create table Urun(
+Urun_Id int Primary Key,
+Urun_Adi nvarchar(50) not null,
+Fiyat float not null
+)
+
+
+
+use Alisveris
+create table Siparis(
+Siparis_No int Primary Key,
+Tarih Date not null,
+KargoFirmasi nvarchar(10) not null,
+UrunId int foreign key references Urun(Urun_Id),
+Musteri int foreign key references Musteri(Musteri_Id)
+)
+
+use Alisveris
+
+select KargoFirmasi from Siparis where Tarih='2022-12-12'
+
+
+select KargoFirmasi from Siparis where Tarih Between '2022-12-12' and
+'2022-12-31'
+
+select KargoFirmasi from Siparis where Tarih>='2022-12-01' and
+Tarih<='2022-12-31'
+
+select Urun_Adi from Urun inner join Siparis on
+Urun.Urun_Id=Siparis.UrunId where Tarih='2022-12-25'
+
+select Ad,Soyad from Musteri inner join Siparis on 
+Siparis.Musteri=Musteri.Musteri_Id where Tarih<'2023-01-01'
+
+select Ad,Soyad from Musteri inner join Siparis on
+Musteri.Musteri_Id=Siparis.Musteri
+where Tarih>='2022-12-01' and
+Tarih<='2022-12-31'
+
+select Ad,Soyad,Urun_Adi from Musteri inner join Siparis on
+Musteri.Musteri_Id=Siparis.Musteri inner join Urun on
+Urun.Urun_Id=Siparis.UrunId
+where Tarih>='2022-12-01' and
+Tarih<='2022-12-31'
+
+
+
+select Ad,Soyad from Musteri inner join Siparis on
+Musteri.Musteri_Id=Siparis.Musteri inner join Urun on 
+Siparis.UrunId=Urun.Urun_Id where Fiyat>200
+
+select Ad,Soyad from Musteri inner join Siparis on
+Musteri.Musteri_Id=Siparis.Musteri where Siparis.UrunId IN 
+(Select Urun_Id from Urun where Fiyat>200)
